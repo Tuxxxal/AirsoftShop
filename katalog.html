@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Силовик - Каталог страйкбольного снаряжения</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+<style>
+body {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: white;
+}
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px;
+}
+.product {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+.product.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+}
+.product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.product:hover img {
+    transform: scale(1.05);
+}
+.product h2 { font-size: 1.2rem; color: #ffd700; margin: 15px 0 5px; }
+.product p { color: #ccc; font-size: 0.95rem; margin-bottom: 10px; }
+.price { font-size: 1.3rem; font-weight: bold; color: #ff8c00; }
+.buy-btn {
+    display: inline-block; margin-top: 10px; padding: 10px 20px; background: #ff8c00;
+    color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;
+    transition: background 0.3s, transform 0.3s;
+}
+.buy-btn:hover { background: #ffa500; transform: translateY(-3px); }
+
+.cart-btn, .favorites-btn {
+    position: fixed; top: 20px; padding: 12px 18px; border-radius: 10px;
+    font-weight: bold; cursor: pointer; z-index: 50; transition: background 0.3s, transform 0.3s;
+}
+.cart-btn { right: 20px; background: #ff8c00; color: #fff; }
+.cart-btn:hover { background: #ffa500; transform: scale(1.05); }
+.favorites-btn { right: 150px; background: #ffd700; color: black; }
+.favorites-btn:hover { background: #ffec42; transform: scale(1.05); }
+
+.cart-item, .favorite-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.cart-item button, .favorite-item button {
+    margin-left: 5px; padding: 2px 6px; border-radius: 5px; font-weight: bold; cursor: pointer;
+    transition: background 0.2s;
+}
+.delete-btn { background: #ff4d4d; color: white;}
+.delete-btn:hover { background: #ff1a1a; }
+.favorite-btn { background: #ffd700; color: black; }
+.favorite-btn:hover { background: #ffec42; }
+
+.modal-bg {
+    position: fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition: opacity 0.3s;
+}
+.modal-bg.show { opacity:1; pointer-events:auto; }
+.modal-content { background:#1f1f2e; border-radius:15px; padding:20px; width:360px; max-height:80vh; overflow-y:auto; color:#fff; }
+.modal-content h2 { font-size:1.5rem; color:#ffd700; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<!-- Кнопки возврата, корзины и избранного -->
+<div class="flex justify-between max-w-screen-xl mx-auto p-4">
+    <a href="index.html" class="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold hover:bg-yellow-600">🏠 Главная</a>
+    <button id="favoritesBtn" class="favorites-btn">⭐ Избранное (<span id="favCount">0</span>)</button>
+    <button id="cartBtn" class="cart-btn">🛒 Корзина (<span id="cartCount">0</span>)</button>
+</div>
+
+<h1 class="text-center text-4xl font-extrabold text-yellow-500 mb-8 drop-shadow-lg">🔥 Каталог страйкбольного снаряжения 🔥</h1>
+
+<div class="catalog" id="catalog"></div>
+
+<!-- Модальное окно корзины -->
+<div id="cartModal" class="modal-bg">
+    <div class="modal-content">
+        <h2>🛒 Ваша корзина</h2>
+        <div id="cartItems" class="space-y-2"></div>
+        <div class="mt-4 text-lg font-bold text-yellow-400">Сумма: <span id="cartTotal">0</span> ₽</div>
+        <button id="closeCart" class="mt-4 w-full bg-yellow-500 text-black py-2 rounded-lg hover:bg-yellow-600">Закрыть</button>
+    </div>
+</div>
+
+<!-- Модальное окно избранного -->
+<div id="favoritesModal" class="modal-bg">
+    <div class="modal-content">
+        <h2>⭐ Избранные товары</h2>
+        <div id="favoriteItems" class="space-y-2"></div>
+        <button id="closeFavorites" class="mt-4 w-full bg-yellow-500 text-black py-2 rounded-lg hover:bg-yellow-600">Закрыть</button>
+    </div>
+</div>
+
+<script>
+// Товары
+const products = [
+    {id:1, name:'Пистолет GLOCK 19', desc:'Газовый привод, металлический затвор', price:7000, img:'Image/глок.jpg'},
+    {id:2, name:'Автомат АК74M', desc:'Электропневматический, полимерный корпус', price:18900, img:'Image/калаш.jpg'},
+    {id:3, name:'Шлем Ops-Core', desc:'Легкий тактический шлем, размер L', price:3700, img:'Image/шлем.jpg'},
+    {id:4, name:'Бронежилет VT-6026-3', desc:'Тактический быстросъемный бронежилет', price:10400, img:'Image/броник.jpg'},
+];
+
+// Корзина и избранное
+let cart = [];
+let favorites = [];
+
+const catalog = document.getElementById('catalog');
+const cartCount = document.getElementById('cartCount');
+const favCount = document.getElementById('favCount');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const favoriteItems = document.getElementById('favoriteItems');
+const cartModal = document.getElementById('cartModal');
+const favoritesModal = document.getElementById('favoritesModal');
+const cartBtn = document.getElementById('cartBtn');
+const favoritesBtn = document.getElementById('favoritesBtn');
+const closeCart = document.getElementById('closeCart');
+const closeFavorites = document.getElementById('closeFavorites');
+
+// Генерация каталога с анимацией
+products.forEach((p, idx) => {
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <h2>${p.name}</h2>
+        <p>${p.desc}</p>
+        <span class="price">${p.price} ₽</span><br>
+        <button class="buy-btn" onclick="addToCart(${p.id})">Купить</button>
+    `;
+    catalog.appendChild(div);
+    setTimeout(()=> div.classList.add('show'), idx*150); // плавная анимация появления
+});
+
+// Функции корзины
+function addToCart(id){
+    const prod = products.find(p => p.id === id);
+    cart.push(prod);
+    updateCartUI();
+}
+function removeFromCart(index){ cart.splice(index,1); updateCartUI(); }
+function updateCartUI(){
+    cartCount.textContent = cart.length;
+    cartItems.innerHTML = '';
+    let total=0;
+    cart.forEach((item, idx)=>{
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+            <span>${item.name} — ${item.price} ₽</span>
+            <div>
+                <button class="favorite-btn" onclick="addToFavorites(${idx})">★</button>
+                <button class="delete-btn" onclick="removeFromCart(${idx})">✖</button>
+            </div>
+        `;
+        cartItems.appendChild(div);
+        total += item.price;
+    });
+    cartTotal.textContent = total;
+}
+
+// Избранное
+function addToFavorites(index){
+    const item = cart[index];
+    if(!favorites.includes(item)) favorites.push(item);
+    updateFavoritesUI();
+    alert(`⭐ "${item.name}" добавлен в избранное!`);
+}
+function removeFromFavorites(index){ favorites.splice(index,1); updateFavoritesUI(); }
+function updateFavoritesUI(){
+    favCount.textContent = favorites.length;
+    favoriteItems.innerHTML = '';
+    favorites.forEach((item, idx)=>{
+        const div = document.createElement('div');
+        div.className = 'favorite-item';
+        div.innerHTML = `
+            <span>${item.name} — ${item.price} ₽</span>
+            <div>
+                <button class="buy-btn" onclick="addToCart(${item.id})">Купить</button>
+                <button class="delete-btn" onclick="removeFromFavorites(${idx})">✖</button>
+            </div>
+        `;
+        favoriteItems.appendChild(div);
+    });
+}
+
+// Модальные окна
+cartBtn.addEventListener('click', ()=> cartModal.classList.add('show'));
+closeCart.addEventListener('click', ()=> cartModal.classList.remove('show'));
+favoritesBtn.addEventListener('click', ()=> favoritesModal.classList.add('show'));
+closeFavorites.addEventListener('click', ()=> favoritesModal.classList.remove('show'));
+</script>
+
+</body>
+</html>

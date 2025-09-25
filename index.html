@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Силовик - Магазин страйкбольного снаряжения</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  
+  <!-- Навбар -->
+  <nav class="bg-black/90 backdrop-blur border-b border-yellow-500/30 shadow-md shadow-black/40 fixed top-0 left-0 w-full z-50">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="index.html" class="flex items-center space-x-3">
+        <img src="Image/4.jpg" class="h-10 rounded-full shadow-lg shadow-yellow-500/40" alt="Силовик Лого" />
+        <span class="self-center text-3xl font-extrabold text-yellow-500 tracking-wide">Силовик</span>
+      </a>
+      <div class="flex items-center space-x-6">
+        <a href="katalog.html" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Каталог</a>
+        <a href="#about" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">О нас</a>
+        <a href="#contacts" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+        <a href="Authorization.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">Войти</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Хедер -->
+  <header class="relative w-full h-[600px] bg-cover bg-center mt-16" style="background-image: url('Image/airsoft_bg.jpg');">
+    <div class="absolute inset-0 bg-black/70 flex flex-col justify-center items-center text-center px-4">
+      <h1 data-aos="fade-down" class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg">Экипировка для победителей</h1>
+      <p data-aos="fade-up" class="text-lg md:text-xl mt-6 max-w-2xl text-gray-200">Лучшее страйкбольное оружие и тактическое снаряжение для профессионалов и новичков. Будь готов к любой игре.</p>
+      <a href="katalog.html" data-aos="zoom-in" class="mt-8 px-8 py-3 bg-yellow-500 text-black text-lg font-semibold rounded-xl shadow-lg shadow-yellow-500/40 hover:bg-yellow-600 transition-all duration-300">Перейти в каталог</a>
+    </div>
+  </header>
+
+  <!-- Популярные товары -->
+  <section id="catalog" class="max-w-screen-xl mx-auto py-20 px-6">
+    <h2 data-aos="fade-up" class="text-4xl font-bold text-center text-yellow-500 mb-14">🔥 Популярные товары</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+
+      <!-- Карточка -->
+      <div data-aos="zoom-in" class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg shadow-black/40 transform hover:scale-105 transition duration-300">
+        <img src="Image/глок.jpg" class="w-full h-56 object-cover" alt="Пистолет GLOCK 19">
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-yellow-400">Пистолет GLOCK 19</h3>
+          <p class="text-gray-300 mt-2">Газовый привод, металлический затвор.</p>
+          <span class="block mt-4 text-yellow-500 text-lg font-bold">7 000 ₽</span>
+          <button class="mt-4 w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition">Купить</button>
+        </div>
+      </div>
+
+      <div data-aos="zoom-in" class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg shadow-black/40 transform hover:scale-105 transition duration-300">
+        <img src="Image/калаш.jpg" class="w-full h-56 object-cover" alt="Автомат АК74М">
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-yellow-400">Автомат АК74М</h3>
+          <p class="text-gray-300 mt-2">Электропневматический, полимерный корпус.</p>
+          <span class="block mt-4 text-yellow-500 text-lg font-bold">18 900 ₽</span>
+          <button class="mt-4 w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition">Купить</button>
+        </div>
+      </div>
+
+      <div data-aos="zoom-in" class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg shadow-black/40 transform hover:scale-105 transition duration-300">
+        <img src="Image/шлем.jpg" class="w-full h-56 object-cover" alt="Шлем Ops-Core">
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-yellow-400">Шлем Ops-Core</h3>
+          <p class="text-gray-300 mt-2">Легкий тактический шлем Ops-Core, размер L.</p>
+          <span class="block mt-4 text-yellow-500 text-lg font-bold">3 700 ₽</span>
+          <button class="mt-4 w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition">Купить</button>
+        </div>
+      </div>
+
+      <div data-aos="zoom-in" class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg shadow-black/40 transform hover:scale-105 transition duration-300">
+        <img src="Image/броник.jpg" class="w-full h-56 object-cover" alt="Тактический бронежилет">
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-yellow-400">Бронежилет VT-6026-3</h3>
+          <p class="text-gray-300 mt-2">Тактический быстросъемный плитник.</p>
+          <span class="block mt-4 text-yellow-500 text-lg font-bold">10 400 ₽</span>
+          <button class="mt-4 w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition">Купить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <!-- FAQ -->
+<section id="faq" class="relative py-20">
+  <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 opacity-95"></div>
+  <div class="absolute inset-0 blur-3xl bg-yellow-500/10"></div>
+  <div class="relative max-w-screen-xl mx-auto px-6">
+    <h2 data-aos="fade-up" class="text-4xl font-extrabold text-center text-yellow-500 mb-12">❓ Часто задаваемые вопросы</h2>
+    <div id="accordion-flush" data-accordion="collapse" class="border border-yellow-500/30 rounded-2xl shadow-xl shadow-yellow-500/40 overflow-hidden">
+
+      <!-- Вопрос 1 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq1">
+          <span>Как оформить заказ?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq1" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Выберите товар, добавьте его в корзину и оформите заказ — всё просто.</div>
+      </div>
+
+      <!-- Вопрос 2 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq2">
+          <span>Какие способы оплаты доступны?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq2" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Visa, MasterCard, Мир и популярные электронные кошельки.</div>
+      </div>
+
+      <!-- Вопрос 3 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq3">
+          <span>Сколько занимает доставка?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq3" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Обычно 3–7 дней в зависимости от региона.</div>
+      </div>
+
+      <!-- Вопрос 4 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq4">
+          <span>Есть ли гарантия на товары?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq4" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Да, гарантия от 6 месяцев до 1 года на большинство товаров.</div>
+      </div>
+
+      <!-- Вопрос 5 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq5">
+          <span>Можно ли вернуть товар?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq5" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Да, возврат возможен в течение 14 дней при сохранении упаковки и товарного вида.</div>
+      </div>
+
+      <!-- Вопрос 6 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq6">
+          <span>Есть ли акции и скидки?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq6" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Конечно! Следите за разделом "Акции" и нашими соцсетями.</div>
+      </div>
+
+      <!-- Вопрос 7 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 border-b border-gray-700 transition-all duration-300" data-accordion-target="#faq7">
+          <span>Можно ли получить консультацию перед покупкой?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq7" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Да, наши менеджеры помогут подобрать оптимальное снаряжение.</div>
+      </div>
+
+      <!-- Вопрос 8 -->
+      <h2>
+        <button type="button" class="flex justify-between items-center w-full p-5 text-lg font-semibold text-white bg-gray-800/80 hover:bg-gray-700 transition-all duration-300" data-accordion-target="#faq8">
+          <span>Можно ли заказать доставку в другой город?</span>
+          <svg class="w-6 h-6 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a1 1 0 011.41 0L10 10.58l3.36-3.37a1 1 0 111.41 1.42l-4.06 4.06a1 1 0 01-1.41 0L5.23 8.62a1 1 0 010-1.41z"/></svg>
+        </button>
+      </h2>
+      <div id="faq8" class="hidden">
+        <div class="p-5 bg-gray-900/90 text-gray-300">Да, мы доставляем товары по всей России и странам СНГ.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Футер -->
+  <footer class="fixed bottom-0 left-0 w-full bg-gray-900/95 border-t border-yellow-500/30 text-gray-400 text-sm shadow-lg shadow-black/50">
+    <div class="max-w-screen-xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p class="text-center sm:text-left">&copy; 2025 Силовик ⚡ Все права защищены</p>
+      <div class="flex space-x-6">
+        <a href="#privacy" class="hover:text-yellow-400 transition-colors duration-300">Политика конфиденциальности</a>
+        <a href="#contacts" class="hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AOS init -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админ-панель: Страйкбольное снаряжение</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Flowbite -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
+<style>
+body { background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: #fff; }
+.sidebar a { display:block; padding:12px 16px; border-radius:8px; margin-bottom:6px; transition:0.3s; }
+.sidebar a:hover { background: rgba(255,215,0,0.2); color: #ffd700; }
+.table-wrapper { overflow-x:auto; }
+.fade-in { opacity:0; transform:translateY(20px); transition:0.5s ease-out; }
+.fade-in.show { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="bg-black bg-opacity-80 shadow p-4 flex justify-between items-center fixed w-full z-20">
+  <div class="text-xl font-bold text-yellow-500">Airsoft Shop | Admin</div>
+  <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg" onclick="logout()">Выйти</button>
+</nav>
+
+<div class="flex pt-16 min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 sidebar p-6 bg-gray-900/80 backdrop-blur-md">
+    <a href="#" onclick="showSection('products')">📦 Товары</a>
+    <a href="#" onclick="showSection('users')">👥 Пользователи</a>
+  </aside>
+
+  <!-- Content -->
+  <main class="flex-1 p-6 space-y-6">
+
+    <!-- Секция Товары -->
+    <section id="productsSection" class="fade-in">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-yellow-400">Список товаров</h2>
+        <button data-modal-target="addProductModal" data-modal-toggle="addProductModal" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">+ Добавить товар</button>
+      </div>
+      <div class="table-wrapper bg-gray-800 rounded-lg shadow">
+        <table class="min-w-full text-left text-white">
+          <thead class="bg-gray-700">
+            <tr>
+              <th class="px-4 py-2">#</th>
+              <th class="px-4 py-2">Название</th>
+              <th class="px-4 py-2">Описание</th>
+              <th class="px-4 py-2">Цена</th>
+              <th class="px-4 py-2">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Секция Пользователи -->
+    <section id="usersSection" class="fade-in hidden">
+      <h2 class="text-2xl font-bold text-yellow-400 mb-4">Список пользователей</h2>
+      <div class="table-wrapper bg-gray-800 rounded-lg shadow">
+        <table class="min-w-full text-left text-white">
+          <thead class="bg-gray-700">
+            <tr>
+              <th class="px-4 py-2">#</th>
+              <th class="px-4 py-2">Имя</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Роль</th>
+              <th class="px-4 py-2">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Модалка добавления товара -->
+<div id="addProductModal" tabindex="-1" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-gray-900 p-6 rounded-xl w-full max-w-md">
+    <h3 class="text-xl font-bold text-yellow-400 mb-4">Добавить товар</h3>
+    <form id="addProductForm" class="space-y-4">
+      <input type="text" id="productName" placeholder="Название" class="w-full p-2 rounded bg-gray-800" required>
+      <textarea id="productDesc" placeholder="Описание" class="w-full p-2 rounded bg-gray-800" required></textarea>
+      <input type="number" id="productPrice" placeholder="Цена" class="w-full p-2 rounded bg-gray-800" required>
+      <input type="url" id="productImg" placeholder="Ссылка на изображение" class="w-full p-2 rounded bg-gray-800" required>
+      <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black py-2 rounded font-bold">Сохранить</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Анимация появления
+document.querySelectorAll('.fade-in').forEach(el=>{
+  setTimeout(()=>el.classList.add('show'),100);
+});
+
+// Переключение секций
+function showSection(section){
+  document.getElementById('productsSection').classList.add('hidden');
+  document.getElementById('usersSection').classList.add('hidden');
+  if(section==='products') document.getElementById('productsSection').classList.remove('hidden');
+  if(section==='users') document.getElementById('usersSection').classList.remove('hidden');
+}
+
+// Выход из панели
+function logout(){ window.location.href = 'Authorization.html'; }
+
+// Здесь можно подгружать данные из базы
+const productsData = [
+  {id:1,name:'Glock 19',desc:'Газовый пистолет',price:7000},
+  {id:2,name:'AK74M',desc:'Электропневматическая винтовка',price:18900}
+];
+const usersData = [
+  {id:1,name:'Иван Иванов',email:'ivan@mail.ru',role:'Admin'},
+  {id:2,name:'Петр Петров',email:'petr@mail.ru',role:'User'}
+];
+
+// Вывод товаров
+const productsTable = document.getElementById('productsTable');
+productsData.forEach((p,i)=>{
+  const row = document.createElement('tr');
+  row.className='border-b border-gray-700';
+  row.innerHTML = `<td class="px-4 py-2">${i+1}</td>
+    <td class="px-4 py-2">${p.name}</td>
+    <td class="px-4 py-2">${p.desc}</td>
+    <td class="px-4 py-2">${p.price} ₽</td>
+    <td class="px-4 py-2 space-x-2">
+      <button class="text-blue-400 hover:underline">Редактировать</button>
+      <button class="text-red-500 hover:underline">Удалить</button>
+    </td>`;
+  productsTable.appendChild(row);
+});
+
+// Вывод пользователей
+const usersTable = document.getElementById('usersTable');
+usersData.forEach((u,i)=>{
+  const row = document.createElement('tr');
+  row.className='border-b border-gray-700';
+  row.innerHTML = `<td class="px-4 py-2">${i+1}</td>
+    <td class="px-4 py-2">${u.name}</td>
+    <td class="px-4 py-2">${u.email}</td>
+    <td class="px-4 py-2">${u.role}</td>
+    <td class="px-4 py-2 space-x-2">
+      <button class="text-blue-400 hover:underline">Редактировать</button>
+      <button class="text-red-500 hover:underline">Удалить</button>
+    </td>`;
+  usersTable.appendChild(row);
+});
+</script>
+
+</body>
+</html>
