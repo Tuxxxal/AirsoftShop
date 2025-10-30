@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>О нас — Силовик - Магазин страйкбольного снаряжения</title>
   <meta name="description" content="Силовик — магазин страйкбольного снаряжения. Купите страйкбол оружие, приводы, ВВД-системы, тактическую экипировку и аксессуары. Лучший airsoft store в России: АК, PDW, пистолеты, бронежилеты, шлемы. Школа страйкбола, планета страйкбола, НПО и ПКМ — всё для игры страйкбол как спорт. Airsoftrus — ваш выбор!">
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="bg-gray-900 text-white font-sans overflow-x-hidden">
@@ -25,8 +24,8 @@
       </a>
       <div class="flex items-center space-x-6">
         <a href="katalog.html" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Каталог</a>
-        <a href="about.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">О нас</a>
-        <a href="#contacts" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+        <a href="info.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">О нас</a>
+        <a href="contacts.html" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Контакты</a>
         <a href="Authorization.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">Войти</a>
       </div>
     </div>
@@ -35,16 +34,16 @@
   <!-- Хедер -->
   <header class="relative w-full h-[600px] bg-cover bg-center mt-16" style="background-image: url('Image/airsoft_bg.jpg');">
     <div class="absolute inset-0 bg-black/70 flex flex-col justify-center items-center text-center px-4">
-      <h1 data-aos="fade-down" class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg">🔥 О нас — команда победителей</h1>
-      <p data-aos="fade-up" class="text-lg md:text-xl mt-6 max-w-2xl text-gray-200">Мы не просто продаем страйкбол — мы создаем культуру, где каждый игрок чувствует себя частью команды.</p>
-      <a href="katalog.html" data-aos="zoom-in" class="mt-8 px-8 py-3 bg-yellow-500 text-black text-lg font-semibold rounded-xl shadow-lg shadow-yellow-500/40 hover:bg-yellow-600 transition-all duration-300">Перейти в каталог</a>
+      <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg fade-in">🔥 О нас — команда победителей</h1>
+      <p class="text-lg md:text-xl mt-6 max-w-2xl text-gray-200 fade-in">Мы не просто продаем страйкбол — мы создаем культуру, где каждый игрок чувствует себя частью команды.</p>
+      <a href="katalog.html" class="mt-8 px-8 py-3 bg-yellow-500 text-black text-lg font-semibold rounded-xl shadow-lg shadow-yellow-500/40 hover:bg-yellow-600 transition-all duration-300 fade-in">Перейти в каталог</a>
     </div>
   </header>
 
   <!-- Основная секция -->
   <section class="max-w-screen-xl mx-auto py-20 px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div data-aos="fade-right" class="space-y-6">
+      <div class="space-y-6 fade-in">
         <h2 class="text-4xl font-bold text-yellow-500">Наша история</h2>
         <p class="text-gray-300 leading-relaxed">
           «Силовик» родился из страсти к страйкболу и желания сделать игру доступной, безопасной и максимально реалистичной.
@@ -53,22 +52,22 @@
         <p class="text-gray-300 leading-relaxed">
           За годы работы мы стали не просто магазином — мы стали центром страйкбольного сообщества. У нас вы найдете не только товары, но и советы, обучение и единомышленников.
         </p>
-        <div class="flex space-x-4 pt-4">
-          <div class="bg-gray-800 p-4 rounded-lg text-center">
+        <div class="flex flex-wrap gap-4 pt-4">
+          <div class="bg-gray-800 p-4 rounded-lg text-center min-w-[100px]">
             <div class="text-2xl font-bold text-yellow-500">5+</div>
             <div class="text-sm text-gray-400">лет опыта</div>
           </div>
-          <div class="bg-gray-800 p-4 rounded-lg text-center">
+          <div class="bg-gray-800 p-4 rounded-lg text-center min-w-[100px]">
             <div class="text-2xl font-bold text-yellow-500">10K+</div>
             <div class="text-sm text-gray-400">довольных клиентов</div>
           </div>
-          <div class="bg-gray-800 p-4 rounded-lg text-center">
+          <div class="bg-gray-800 p-4 rounded-lg text-center min-w-[100px]">
             <div class="text-2xl font-bold text-yellow-500">100%</div>
             <div class="text-sm text-gray-400">гарантия качества</div>
           </div>
         </div>
       </div>
-      <div data-aos="fade-left" class="rounded-2xl overflow-hidden shadow-xl shadow-black/40">
+      <div class="rounded-2xl overflow-hidden shadow-xl shadow-black/40 fade-in">
         <img src="Image/team.jpg" alt="Команда Силовик" class="w-full h-auto object-cover">
       </div>
     </div>
@@ -77,19 +76,19 @@
   <!-- Миссия -->
   <section class="bg-gray-800/50 py-20">
     <div class="max-w-screen-xl mx-auto px-6">
-      <h2 data-aos="fade-up" class="text-4xl font-bold text-center text-yellow-500 mb-12">🎯 Наша миссия</h2>
+      <h2 class="text-4xl font-bold text-center text-yellow-500 mb-12 fade-in">🎯 Наша миссия</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div data-aos="zoom-in" class="bg-gray-900 p-6 rounded-xl text-center">
+        <div class="bg-gray-900 p-6 rounded-xl text-center fade-in">
           <div class="text-5xl text-yellow-500 mb-4">🛡️</div>
           <h3 class="text-xl font-bold text-yellow-400 mb-3">Безопасность прежде всего</h3>
           <p class="text-gray-300">Все наши товары проходят строгий контроль качества и соответствуют международным стандартам безопасности.</p>
         </div>
-        <div data-aos="zoom-in" class="bg-gray-900 p-6 rounded-xl text-center">
+        <div class="bg-gray-900 p-6 rounded-xl text-center fade-in">
           <div class="text-5xl text-yellow-500 mb-4">⚡</div>
           <h3 class="text-xl font-bold text-yellow-400 mb-3">Экипировка для победителей</h3>
           <p class="text-gray-300">Только проверенные бренды и модели, которые работают на полную мощность в бою.</p>
         </div>
-        <div data-aos="zoom-in" class="bg-gray-900 p-6 rounded-xl text-center">
+        <div class="bg-gray-900 p-6 rounded-xl text-center fade-in">
           <div class="text-5xl text-yellow-500 mb-4">👥</div>
           <h3 class="text-xl font-bold text-yellow-400 mb-3">Сообщество единомышленников</h3>
           <p class="text-gray-300">Мы не просто продаем — мы объединяем людей, которые любят страйкбол и хотят быть лучшими.</p>
@@ -100,22 +99,22 @@
 
   <!-- Контакты -->
   <section id="contacts" class="max-w-screen-xl mx-auto py-20 px-6">
-    <h2 data-aos="fade-up" class="text-4xl font-bold text-center text-yellow-500 mb-12">📞 Свяжитесь с нами</h2>
+    <h2 class="text-4xl font-bold text-center text-yellow-500 mb-12 fade-in">📞 Свяжитесь с нами</h2>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <div data-aos="fade-right" class="space-y-6">
+      <div class="space-y-6 fade-in">
         <div class="bg-gray-800 p-6 rounded-xl">
           <h3 class="text-xl font-bold text-yellow-400 mb-4">Наши контакты</h3>
           <div class="space-y-3 text-gray-300">
             <div class="flex items-start space-x-3">
-              <svg class="w-5 h-5 text-yellow-500 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.964.774l2.4 6A1 1 0 019.502 12H10a1 1 0 011 1v6a1 1 0 11-2 0v-6h-.5a1 1 0 01-.964-.774l-2.4-6A1 1 0 016.5 3H4a1 1 0 01-1-1z"/></svg>
+              <svg class="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.964.774l2.4 6A1 1 0 019.502 12H10a1 1 0 011 1v6a1 1 0 11-2 0v-6h-.5a1 1 0 01-.964-.774l-2.4-6A1 1 0 016.5 3H4a1 1 0 01-1-1z"/></svg>
               <span>Телефон: +7 (999) 123-45-67</span>
             </div>
             <div class="flex items-start space-x-3">
-              <svg class="w-5 h-5 text-yellow-500 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 5.884l7.997.002A2 2 0 0116 10v10a2 2 0 01-2 2h-4a2 2 0 01-2-2V10a2 2 0 01-2-2h-4a2 2 0 01-2-2v-4.884zm2 7.416v-3.536A2 2 0 016 7h8a2 2 0 012 2v3.536a2 2 0 01-2 2H8a2 2 0 01-2-2z"/></svg>
+              <svg class="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 5.884l7.997.002A2 2 0 0116 10v10a2 2 0 01-2 2h-4a2 2 0 01-2-2V10a2 2 0 01-2-2h-4a2 2 0 01-2-2v-4.884zm2 7.416v-3.536A2 2 0 016 7h8a2 2 0 012 2v3.536a2 2 0 01-2 2H8a2 2 0 01-2-2z"/></svg>
               <span>Email: info@silovik-airsoft.ru</span>
             </div>
             <div class="flex items-start space-x-3">
-              <svg class="w-5 h-5 text-yellow-500 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M11 18a1 1 0 001-1v-6a1 1 0 10-2 0v6a1 1 0 001 1zM11 18a1 1 0 001-1v-6a1 1 0 10-2 0v6a1 1 0 001 1zM11 18a1 1 0 001-1v-6a1 1 0 10-2 0v6a1 1 0 001 1zM11 18a1 1 0 001-1v-6a1 1 0 10-2 0v6a1 1 0 001 1zM11 18a1 1 0 001-1v-6a1 1 0 10-2 0v6a1 1 0 001 1z"/></svg>
+              <svg class="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
               <span>Адрес: ул. Пушкина, д. Колотушкина, г. Стрельск, 123456</span>
             </div>
           </div>
@@ -129,7 +128,7 @@
           </div>
         </div>
       </div>
-      <div data-aos="fade-left" class="bg-gray-800 p-6 rounded-xl">
+      <div class="bg-gray-800 p-6 rounded-xl fade-in">
         <h3 class="text-xl font-bold text-yellow-400 mb-4">Напишите нам</h3>
         <form class="space-y-4">
           <div>
@@ -151,19 +150,28 @@
   </section>
 
   <!-- Футер -->
-  <footer class="fixed bottom-0 left-0 w-full bg-gray-900/95 border-t border-yellow-500/30 text-gray-400 text-sm shadow-lg shadow-black/50">
+  <footer class="bg-gray-900/95 border-t border-yellow-500/30 text-gray-400 text-sm shadow-lg shadow-black/50">
     <div class="max-w-screen-xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-2">
       <p class="text-center sm:text-left">&copy; 2025 Силовик ⚡ Все права защищены</p>
       <div class="flex space-x-6">
         <a href="#privacy" class="hover:text-yellow-400 transition-colors duration-300">Политика конфиденциальности</a>
-        <a href="#contacts" class="hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+        <a href="contacts.html" class="hover:text-yellow-400 transition-colors duration-300">Контакты</a>
       </div>
     </div>
   </footer>
 
-  <!-- AOS init -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>AOS.init({ duration: 1000, once: true });</script>
+  <!-- Легкий JS для анимации -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
 
