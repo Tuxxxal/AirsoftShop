@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты — Силовик - Магазин страйкбольного снаряжения</title>
+  <meta name="description" content="Силовик — магазин страйкбольного снаряжения. Купите страйкбол оружие, приводы, ВВД-системы, тактическую экипировку и аксессуары. Лучший airsoft store в России: АК, PDW, пистолеты, бронежилеты, шлемы. Школа страйкбола, планета страйкбола, НПО и ПКМ — всё для игры страйкбол как спорт. Airsoftrus — ваш выбор!">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+
+  <!-- Навбар -->
+  <nav class="bg-black/90 backdrop-blur border-b border-yellow-500/30 shadow-md shadow-black/40 fixed top-0 left-0 w-full z-50">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="index.html" class="flex items-center space-x-3">
+        <img src="Image/4.jpg" class="h-10 rounded-full shadow-lg shadow-yellow-500/40" alt="Силовик Лого" />
+        <span class="self-center text-3xl font-extrabold text-yellow-500 tracking-wide">Силовик</span>
+      </a>
+      <div class="flex items-center space-x-6">
+        <a href="katalog.html" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">Каталог</a>
+        <a href="info.html" class="text-lg font-semibold hover:text-yellow-400 transition-colors duration-300">О нас</a>
+        <a href="contacts.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+        <a href="Authorization.html" class="text-lg font-semibold text-yellow-500 hover:text-yellow-400 transition-colors duration-300">Войти</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Хедер -->
+  <header class="relative w-full h-[600px] bg-cover bg-center mt-16" style="background-image: url('Image/airsoft_bg.jpg');">
+    <div class="absolute inset-0 bg-black/70 flex flex-col justify-center items-center text-center px-4">
+      <h1 data-aos="fade-down" class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg">📞 Свяжитесь с нами</h1>
+      <p data-aos="fade-up" class="text-lg md:text-xl mt-6 max-w-2xl text-gray-200">Мы всегда на связи — ответим на любой вопрос и поможем выбрать идеальное снаряжение.</p>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <section class="max-w-screen-xl mx-auto py-20 px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Контактная информация -->
+      <div data-aos="fade-right" class="space-y-8">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg shadow-black/30">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-4">📍 Адрес</h2>
+          <p class="text-gray-300 text-lg">ул. Пушкина, д. Колотушкина<br>г. Стрельск, 123456</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg shadow-black/30">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-4">📱 Телефон</h2>
+          <p class="text-gray-300 text-lg">+7 (999) 123-45-67</p>
+          <p class="text-sm text-gray-400 mt-2">Пн–Вс: 10:00 – 20:00</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg shadow-black/30">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-4">✉️ Email</h2>
+          <p class="text-gray-300 text-lg">info@silovik-airsoft.ru</p>
+          <p class="text-sm text-gray-400 mt-2">Ответим в течение 24 часов</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg shadow-black/30">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-4">💬 Соцсети</h2>
+          <div class="flex space-x-4 mt-3">
+            <a href="#" class="text-gray-300 hover:text-yellow-400 transition">Telegram</a>
+            <a href="#" class="text-gray-300 hover:text-yellow-400 transition">VK</a>
+            <a href="#" class="text-gray-300 hover:text-yellow-400 transition">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Форма обратной связи -->
+      <div data-aos="fade-left" class="bg-gray-800 p-6 rounded-xl shadow-lg shadow-black/30">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-6">Напишите нам</h2>
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Ваше имя</label>
+            <input type="text" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white" placeholder="Иван">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+            <input type="email" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white" placeholder="ivan@example.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Тема</label>
+            <select class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white">
+              <option>Вопрос по заказу</option>
+              <option>Консультация по снаряжению</option>
+              <option>Сотрудничество</option>
+              <option>Другое</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Сообщение</label>
+            <textarea rows="5" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white" placeholder="Опишите ваш вопрос..."></textarea>
+          </div>
+          <button type="submit" class="w-full px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg shadow-lg shadow-yellow-500/40 hover:bg-yellow-600 transition-all duration-300">Отправить</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Карта (заглушка) -->
+    <div class="mt-16">
+      <h2 data-aos="fade-up" class="text-3xl font-bold text-center text-yellow-500 mb-8">📍 Наше расположение</h2>
+      <div data-aos="zoom-in" class="bg-gray-800 rounded-2xl h-96 flex items-center justify-center text-gray-400">
+        <p class="text-center px-4">Карта будет здесь<br><span class="text-sm">Используйте Яндекс.Карты или 2ГИС для поиска: «Силовик, ул. Пушкина, д. Колотушкина»</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer class="fixed bottom-0 left-0 w-full bg-gray-900/95 border-t border-yellow-500/30 text-gray-400 text-sm shadow-lg shadow-black/50">
+    <div class="max-w-screen-xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p class="text-center sm:text-left">&copy; 2025 Силовик ⚡ Все права защищены</p>
+      <div class="flex space-x-6">
+        <a href="#privacy" class="hover:text-yellow-400 transition-colors duration-300">Политика конфиденциальности</a>
+        <a href="contacts.html" class="hover:text-yellow-400 transition-colors duration-300">Контакты</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AOS init -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>
+
