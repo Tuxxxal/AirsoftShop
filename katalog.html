@@ -1,21 +1,21 @@
+<!-- katalog.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Силовик - Каталог страйкбольного снаряжения</title>
-  <meta name="description" content="Силовик — магазин страйкбольного снаряжения. Купите страйкбол оружие, приводы, ВВД-системы, тактическую экипировку и аксессуары. Лучший airsoft store в России: АК, PDW, пистолеты, бронежилеты, шлемы. Школа страйкбола, планета страйкбола, НПО и ПКМ — всё для игры страйкбол как спорт. Airsoftrus — ваш выбор!">
+  <meta name="description" content="Силовик — магазин страйкбольного снаряжения...">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
   <style>
+    /* ... (весь твой CSS без изменений) ... */
     body {
-      background-color: #0f172a; /* bg-slate-900 */
+      background-color: #0f172a;
       color: white;
       font-family: 'Segoe UI', system-ui, sans-serif;
     }
-
-    /* Анимация появления карточек */
     .product-card {
       opacity: 0;
       transform: translateY(20px);
@@ -25,19 +25,14 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Эффект наведения */
     .product-card:hover {
       transform: translateY(-8px) !important;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
     }
-
     .product-card:hover .product-image {
       transform: scale(1.04);
       filter: brightness(1.1);
     }
-
-    /* Изображение товара */
     .product-image {
       height: 200px;
       width: 100%;
@@ -45,8 +40,6 @@
       transition: all 0.4s ease;
       border-radius: 12px 12px 0 0;
     }
-
-    /* Кнопки */
     .btn-yellow {
       background: linear-gradient(135deg, #f59e0b, #d97706);
       color: #0f172a;
@@ -63,7 +56,6 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 8px -1px rgba(245, 158, 11, 0.6);
     }
-
     .btn-outline {
       border: 2px solid #f59e0b;
       background: transparent;
@@ -76,8 +68,6 @@
     .btn-outline:hover {
       background: rgba(245, 158, 11, 0.15);
     }
-
-    /* Модальные окна */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -94,18 +84,15 @@
       opacity: 1;
       pointer-events: auto;
     }
-
     .modal-content {
-      background: #1e293b; /* slate-800 */
+      background: #1e293b;
       border-radius: 16px;
       width: 90%;
       max-width: 480px;
       padding: 24px;
-      border: 1px solid #334155; /* slate-700 */
+      border: 1px solid #334155;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-
-    /* Категории */
     .category-badge {
       background: rgba(245, 158, 11, 0.15);
       color: #f59e0b;
@@ -119,48 +106,26 @@
     .category-badge:hover, .category-badge.active {
       background: rgba(245, 158, 11, 0.3);
     }
-
-    /* Лоадер для карточек */
-    .skeleton {
-      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      border-radius: 12px;
-    }
     @keyframes loading {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-
-    /* Мобильный футер */
     @media (max-width: 768px) {
-      .desktop-nav {
-        display: none;
-      }
+      .desktop-nav { display: none; }
       .mobile-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #0f172a;
-        border-top: 1px solid #334155;
-        padding: 12px 0;
-        display: flex;
-        justify-content: space-around;
-        z-index: 50;
+        position: fixed; bottom: 0; left: 0; right: 0;
+        background: #0f172a; border-top: 1px solid #334155;
+        padding: 12px 0; display: flex; justify-content: space-around; z-index: 50;
       }
     }
-
     @media (min-width: 769px) {
-      .mobile-nav {
-        display: none;
-      }
+      .mobile-nav { display: none; }
     }
   </style>
 </head>
 <body class="min-h-screen">
 
-  <!-- Навбар (десктоп) -->
+  <!-- Навбар -->
   <nav class="desktop-nav bg-black/90 backdrop-blur border-b border-yellow-500/30 shadow-md shadow-black/40 fixed top-0 left-0 w-full z-40">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="index.html" class="flex items-center space-x-3">
@@ -185,7 +150,6 @@
     </div>
   </nav>
 
-  <!-- Заголовок -->
   <div class="pt-24 md:pt-28 pb-8 text-center px-4">
     <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600 mb-4">
       🔥 Каталог страйкбольного снаряжения
@@ -195,7 +159,6 @@
     </p>
   </div>
 
-  <!-- Фильтры по категориям -->
   <div class="max-w-screen-xl mx-auto px-4 mb-8 flex flex-wrap gap-3 justify-center">
     <span class="category-badge active">Все товары</span>
     <span class="category-badge">Оружие</span>
@@ -203,10 +166,8 @@
     <span class="category-badge">Аксессуары</span>
   </div>
 
-  <!-- Каталог -->
   <div class="catalog max-w-screen-xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-24"></div>
 
-  <!-- Мобильная навигация -->
   <div class="mobile-nav">
     <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-yellow-400">
       <span>🏠</span>
@@ -236,7 +197,7 @@
       <div id="cartItems" class="space-y-4 max-h-80 overflow-y-auto pr-2"></div>
       <div class="mt-6 pt-4 border-t border-slate-700 flex justify-between items-center">
         <div class="text-xl font-bold text-yellow-300">Итого: <span id="cartTotal">0</span> ₽</div>
-        <button class="btn-yellow px-6 py-2.5">Оформить заказ</button>
+        <button id="checkoutBtn" class="btn-yellow px-6 py-2.5">Оформить заказ</button>
       </div>
     </div>
   </div>
@@ -255,14 +216,10 @@
 
   <script>
     const products = [
-      {id:1, name:'Пистолет GLOCK 19', desc:'Газовый привод, металлический затвор, совместим с 12g CO2', price:7000, img:'https://placehold.co/600x400/334155/94a3b8?text=GLOCK+19'},
-      {id:2, name:'Автомат АК74M', desc:'Электропневматический, полимерный корпус, 350 FPS', price:18900, img:'https://placehold.co/600x400/334155/94a3b8?text=АК74M'},
-      {id:3, name:'Шлем Ops-Core', desc:'Легкий тактический шлем Ops-Core Fast, размер L, совместим с налобниками', price:3700, img:'https://placehold.co/600x400/334155/94a3b8?text=Ops-Core'},
-      {id:4, name:'Бронежилет VT-6026-3', desc:'Тактический быстросъемный плитник с MOLLE системой', price:10400, img:'https://placehold.co/600x400/334155/94a3b8?text=VT-6026-3'},
-      {id:5, name:'Пистолет-пулемёт MP5', desc:'Электрический, металлический корпус, 300 FPS', price:14500, img:'https://placehold.co/600x400/334155/94a3b8?text=MP5'},
-      {id:6, name:'Тактический рюкзак', desc:'50л, водонепроницаемый, система MOLLE', price:5200, img:'https://placehold.co/600x400/334155/94a3b8?text=Рюкзак'},
-      {id:7, name:'Батарея 11.1V LiPo', desc:'2200mAh, Deans разъем, для AEG', price:2800, img:'https://placehold.co/600x400/334155/94a3b8?text=LiPo+11.1V'},
-      {id:8, name:'Очки тактические', desc:'Защитные очки с антифог-покрытием, UV400', price:1900, img:'https://placehold.co/600x400/334155/94a3b8?text=Очки'}
+      {id:1, name:'Пистолет GLOCK 19', desc:'Газовый привод, металлический затвор', price:7000, img:'https://placehold.co/600x400/334155/94a3b8?text=GLOCK+19'},
+      {id:2, name:'Автомат АК74M', desc:'Электропневматический, полимерный корпус', price:18900, img:'https://placehold.co/600x400/334155/94a3b8?text=АК74M'},
+      {id:3, name:'Шлем Ops-Core', desc:'Легкий тактический шлем, размер L', price:3700, img:'https://placehold.co/600x400/334155/94a3b8?text=Ops-Core'},
+      {id:4, name:'Бронежилет VT-6026-3', desc:'Тактический быстросъемный плитник', price:10400, img:'https://placehold.co/600x400/334155/94a3b8?text=VT-6026-3'},
     ];
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -275,13 +232,11 @@
     const favoriteItems = document.getElementById('favoriteItems');
     const cartTotal = document.getElementById('cartTotal');
 
-    // Рендер каталога
     function renderCatalog() {
       catalog.innerHTML = '';
       products.forEach((p, idx) => {
         const isInCart = cart.some(item => item.id === p.id);
         const isInFav = favorites.some(item => item.id === p.id);
-        
         const div = document.createElement('div');
         div.className = 'product-card bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700 hover:border-yellow-500/30 transition-all duration-300';
         div.innerHTML = `
@@ -306,30 +261,20 @@
           </div>
         `;
         catalog.appendChild(div);
-        
-        // Анимация появления
-        setTimeout(() => {
-          div.classList.add('visible');
-        }, idx * 150);
+        setTimeout(() => div.classList.add('visible'), idx * 150);
       });
     }
 
-    // Обновление UI
     function updateUI() {
       const cartCount = cart.length;
       const favCount = favorites.length;
-      
       cartCountEls.forEach(el => el.textContent = cartCount);
       favCountEls.forEach(el => el.textContent = favCount);
-      
-      // Сохраняем в localStorage
       localStorage.setItem('cart', JSON.stringify(cart));
       localStorage.setItem('favorites', JSON.stringify(favorites));
-      
       renderCatalog();
     }
 
-    // Добавление в корзину
     function addToCart(id) {
       const product = products.find(p => p.id === id);
       if (!cart.some(item => item.id === id)) {
@@ -338,36 +283,27 @@
       }
     }
 
-    // Удаление из корзины
     function removeFromCart(id) {
       cart = cart.filter(item => item.id !== id);
       updateUI();
     }
 
-    // Добавление в избранное
     function toggleFavorite(id) {
       const product = products.find(p => p.id === id);
       const index = favorites.findIndex(item => item.id === id);
-      
-      if (index === -1) {
-        favorites.push(product);
-      } else {
-        favorites.splice(index, 1);
-      }
+      if (index === -1) favorites.push(product);
+      else favorites.splice(index, 1);
       updateUI();
     }
 
-    // Рендер карточек в модальных окнах
     function renderCartModal() {
       cartItems.innerHTML = '';
       let total = 0;
-      
       if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-center text-gray-400 py-4">Ваша корзина пуста</p>';
         cartTotal.textContent = '0';
         return;
       }
-      
       cart.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'flex items-center gap-4 p-3 bg-slate-700/30 rounded-lg';
@@ -382,18 +318,15 @@
         cartItems.appendChild(div);
         total += item.price;
       });
-      
       cartTotal.textContent = total;
     }
 
     function renderFavoritesModal() {
       favoriteItems.innerHTML = '';
-      
       if (favorites.length === 0) {
         favoriteItems.innerHTML = '<p class="text-center text-gray-400 py-4">Ничего не добавлено в избранное</p>';
         return;
       }
-      
       favorites.forEach(item => {
         const div = document.createElement('div');
         div.className = 'flex items-center gap-4 p-3 bg-slate-700/30 rounded-lg';
@@ -409,7 +342,6 @@
       });
     }
 
-    // Делегирование событий
     catalog.addEventListener('click', (e) => {
       if (e.target.closest('.buy-btn')) {
         const id = parseInt(e.target.closest('.buy-btn').dataset.id);
@@ -421,54 +353,49 @@
       }
     });
 
-    // Модальные окна
     function setupModalListeners() {
+      document.getElementById('checkoutBtn').addEventListener('click', () => {
+        if (cart.length === 0) return;
+        localStorage.setItem('cartForCheckout', JSON.stringify(cart));
+        window.location.href = 'PayPages.html';
+      });
+
+      // ... остальные обработчики (как у тебя) ...
       document.getElementById('cartBtn').addEventListener('click', () => {
         renderCartModal();
         document.getElementById('cartModal').classList.add('active');
       });
-      
       document.getElementById('cartBtnMobile').addEventListener('click', () => {
         renderCartModal();
         document.getElementById('cartModal').classList.add('active');
       });
-      
       document.getElementById('favoritesBtn').addEventListener('click', () => {
         renderFavoritesModal();
         document.getElementById('favoritesModal').classList.add('active');
       });
-      
       document.getElementById('favoritesBtnMobile').addEventListener('click', () => {
         renderFavoritesModal();
         document.getElementById('favoritesModal').classList.add('active');
       });
-      
       document.getElementById('closeCart').addEventListener('click', () => {
         document.getElementById('cartModal').classList.remove('active');
       });
-      
       document.getElementById('closeFavorites').addEventListener('click', () => {
         document.getElementById('favoritesModal').classList.remove('active');
       });
-      
       document.getElementById('closeFavoritesBottom').addEventListener('click', () => {
         document.getElementById('favoritesModal').classList.remove('active');
       });
-      
-      // Закрытие по клику вне модального окна
       document.getElementById('cartModal').addEventListener('click', (e) => {
         if (e.target.id === 'cartModal') {
           document.getElementById('cartModal').classList.remove('active');
         }
       });
-      
       document.getElementById('favoritesModal').addEventListener('click', (e) => {
         if (e.target.id === 'favoritesModal') {
           document.getElementById('favoritesModal').classList.remove('active');
         }
       });
-      
-      // Делегирование в модальных окнах
       document.getElementById('cartItems').addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-from-cart')) {
           const id = parseInt(e.target.dataset.id);
@@ -476,7 +403,6 @@
           renderCartModal();
         }
       });
-      
       document.getElementById('favoriteItems').addEventListener('click', (e) => {
         if (e.target.classList.contains('buy-from-fav')) {
           const id = parseInt(e.target.dataset.id);
@@ -486,11 +412,8 @@
       });
     }
 
-    // Инициализация
     renderCatalog();
     setupModalListeners();
-    
-    // Обновляем UI при загрузке
     updateUI();
   </script>
 </body>

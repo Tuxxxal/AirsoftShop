@@ -1,0 +1,462 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оплата заказа - Силовик</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.0/dist/qrious.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: white;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .payment-card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    .form-input {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      width: 100%;
+      transition: all 0.3s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+    }
+    .payment-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f172a;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 12px;
+      width: 100%;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.4);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .payment-btn.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .payment-btn.active:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px -1px rgba(245, 158, 11, 0.6);
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #334155;
+    }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #f59e0b;
+    }
+    .sbp-qr {
+      display: none;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .sbp-qr canvas {
+      max-width: 100%;
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .error {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Навбар -->
+  <nav class="bg-black/90 backdrop-blur border-b border-yellow-500/30 shadow-md shadow-black/40 fixed top-0 left-0 w-full z-50">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="index.html" class="flex items-center space-x-3">
+        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center shadow-lg shadow-yellow-500/40">
+          <span class="font-bold text-black text-xl">S</span>
+        </div>
+        <span class="self-center text-3xl font-extrabold text-yellow-500 tracking-wide">Силовик</span>
+      </a>
+      <div class="text-lg text-gray-300">Оплата заказа</div>
+    </div>
+  </nav>
+
+  <main class="max-w-screen-xl mx-auto px-4 pt-28 pb-16">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Форма оплаты -->
+      <div class="lg:w-2/3">
+        <div class="payment-card">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-6">Контактные данные и доставка</h2>
+          
+          <form id="paymentForm">
+            <!-- Контактные данные -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-gray-300 mb-2">Имя *</label>
+                <input type="text" id="firstName" class="form-input" placeholder="Иван" required>
+                <p class="text-red-400 text-sm mt-1 hidden" id="firstNameError">Только буквы</p>
+              </div>
+              <div>
+                <label class="block text-gray-300 mb-2">Фамилия *</label>
+                <input type="text" id="lastName" class="form-input" placeholder="Иванов" required>
+                <p class="text-red-400 text-sm mt-1 hidden" id="lastNameError">Только буквы</p>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 mb-2">Email *</label>
+              <input type="email" id="email" class="form-input" placeholder="ivan@example.com" required>
+              <p class="text-red-400 text-sm mt-1 hidden" id="emailError">Неверный формат email</p>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 mb-2">Телефон *</label>
+              <input type="tel" id="phone" class="form-input" placeholder="+7 (999) 123-45-67" required>
+            </div>
+            
+            <!-- Адрес -->
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold mb-4 text-yellow-300">Адрес доставки</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-gray-300 mb-2">Город *</label>
+                  <input type="text" id="city" class="form-input" placeholder="Москва" required>
+                </div>
+                <div>
+                  <label class="block text-gray-300 mb-2">Индекс *</label>
+                  <input type="text" id="zip" class="form-input" placeholder="123456" required>
+                </div>
+              </div>
+              <div class="mt-4">
+                <label class="block text-gray-300 mb-2">Улица, дом, квартира *</label>
+                <input type="text" id="address" class="form-input" placeholder="ул. Ленина, д. 10, кв. 5" required>
+              </div>
+            </div>
+
+            <!-- Способ оплаты -->
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold mb-4 text-yellow-300">Способ оплаты</h3>
+              <div class="flex gap-4 mb-6">
+                <button type="button" class="flex-1 py-3 px-4 bg-slate-700 rounded-lg text-center font-medium active:bg-yellow-500/20 active:text-yellow-400" data-method="card">Карта</button>
+                <button type="button" class="flex-1 py-3 px-4 bg-slate-700 rounded-lg text-center font-medium" data-method="sbp">СБП</button>
+              </div>
+
+              <div id="cardDetails">
+                <div class="mb-4">
+                  <label class="block text-gray-300 mb-2">Номер карты *</label>
+                  <input type="text" id="cardNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-gray-300 mb-2">Срок действия *</label>
+                    <input type="text" id="cardExpiry" class="form-input" placeholder="ММ/ГГ" maxlength="5" required>
+                  </div>
+                  <div>
+                    <label class="block text-gray-300 mb-2">CVV *</label>
+                    <input type="text" id="cardCVV" class="form-input" placeholder="123" maxlength="3" required>
+                  </div>
+                </div>
+              </div>
+
+              <div id="sbpQr" class="sbp-qr">
+                <p class="mb-4 text-center text-yellow-400 font-medium">Отсканируйте QR-код для оплаты через СБП</p>
+                <canvas id="qrCanvas"></canvas>
+              </div>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="payment-btn">
+              Оплатить заказ (<span id="totalAmount">0</span> ₽)
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Сводка заказа -->
+      <div class="lg:w-1/3">
+        <div class="payment-card sticky top-32">
+          <h2 class="text-2xl font-bold text-yellow-400 mb-6">Ваш заказ</h2>
+          <div id="orderItems" class="space-y-4 mb-6"></div>
+          <div class="summary-total">
+            <span>Итого</span>
+            <span id="orderTotal">0 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // === ПРОВЕРКА АВТОРИЗАЦИИ ===
+    if (!localStorage.getItem('isLoggedIn')) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Требуется авторизация',
+        text: 'Пожалуйста, войдите в аккаунт для оформления заказа',
+        confirmButtonText: 'Перейти к входу',
+        customClass: { popup: 'shadow-2xl rounded-xl' }
+      }).then(() => {
+        window.location.href = 'Authorization.html';
+      });
+    }
+
+    // === ФОРМАТИРОВАНИЕ ТЕЛЕФОНА ===
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 11);
+      if (value.length === 0) return e.target.value = '';
+      if (value[0] !== '7' && value[0] !== '8') value = '7' + value;
+      if (value[0] === '8') value = '7' + value.substring(1);
+      let formatted = '+7';
+      if (value.length > 1) formatted += ' (' + value.substring(1, 4);
+      if (value.length >= 4) formatted += ') ' + value.substring(4, 7);
+      if (value.length >= 7) formatted += '-' + value.substring(7, 9);
+      if (value.length >= 9) formatted += '-' + value.substring(9, 11);
+      e.target.value = formatted;
+    });
+
+    // === ФОРМАТИРОВАНИЕ КАРТЫ И СРОКА ===
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      let f = '';
+      for (let i = 0; i < v.length; i++) {
+        if (i > 0 && i % 4 === 0) f += ' ';
+        f += v[i];
+      }
+      e.target.value = f.substring(0, 19);
+    });
+    document.getElementById('cardExpiry').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2, 4);
+      e.target.value = v;
+    });
+
+    // === ВЫБОР СПОСОБА ОПЛАТЫ ===
+    document.querySelectorAll('[data-method]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-method]').forEach(b => {
+          b.classList.remove('bg-yellow-500/20', 'text-yellow-400');
+          b.classList.add('bg-slate-700');
+        });
+        btn.classList.add('bg-yellow-500/20', 'text-yellow-400');
+        btn.classList.remove('bg-slate-700');
+
+        const method = btn.dataset.method;
+        document.getElementById('cardDetails').style.display = method === 'card' ? 'block' : 'none';
+        document.getElementById('sbpQr').style.display = method === 'sbp' ? 'block' : 'none';
+        if (method === 'sbp') generateSbpQr();
+      });
+    });
+
+    function generateSbpQr() {
+      const total = document.getElementById('orderTotal').textContent.replace(' ₽', '');
+      const qrData = `spb://pay?amount=${total}&currency=RUB&name=Силовик&description=Оплата заказа`;
+      new QRious({ element: document.getElementById('qrCanvas'), value: qrData, size: 240 });
+    }
+
+    // === ЗАГРУЗКА КОРЗИНЫ ===
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cartForCheckout')) || [];
+      if (cart.length === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Корзина пуста',
+          text: 'Добавьте товары перед оформлением заказа',
+          confirmButtonText: 'В каталог',
+          customClass: { popup: 'shadow-2xl rounded-xl' }
+        }).then(() => window.location.href = 'katalog.html');
+        return;
+      }
+      const items = document.getElementById('orderItems');
+      const totalEl = document.getElementById('orderTotal');
+      const amountEl = document.getElementById('totalAmount');
+
+      let total = 0;
+      items.innerHTML = '';
+      cart.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-4 pb-4 border-b border-slate-700';
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+          <div class="flex-1">
+            <h3 class="font-medium">${item.name}</h3>
+            <p class="text-sm text-gray-400">1 шт.</p>
+          </div>
+          <div class="font-bold text-orange-400">${item.price} ₽</div>
+        `;
+        items.appendChild(div);
+        total += item.price;
+      });
+
+      totalEl.textContent = `${total} ₽`;
+      amountEl.textContent = total;
+    }
+
+    // === ВАЛИДАЦИЯ ===
+    function validateForm() {
+      let isValid = true;
+
+      const nameRegex = /^[а-яА-ЯёЁa-zA-Z\s]+$/;
+      ['firstName', 'lastName'].forEach(field => {
+        const el = document.getElementById(field);
+        const errorEl = document.getElementById(field + 'Error');
+        if (!nameRegex.test(el.value.trim())) {
+          el.classList.add('error');
+          errorEl.classList.remove('hidden');
+          isValid = false;
+        } else {
+          el.classList.remove('error');
+          errorEl.classList.add('hidden');
+        }
+      });
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailEl = document.getElementById('email');
+      const emailError = document.getElementById('emailError');
+      if (!emailRegex.test(emailEl.value.trim())) {
+        emailEl.classList.add('error');
+        emailError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        emailEl.classList.remove('error');
+        emailError.classList.add('hidden');
+      }
+
+      const phone = document.getElementById('phone').value.replace(/\D/g, '');
+      if (phone.length !== 11 || phone[0] !== '7') {
+        document.getElementById('phone').classList.add('error');
+        isValid = false;
+      } else {
+        document.getElementById('phone').classList.remove('error');
+      }
+
+      return isValid;
+    }
+
+    // === ОТПРАВКА "ЧЕКА" ===
+    function simulateEmailReceipt(client, cart, total) {
+      const now = new Date().toLocaleString('ru-RU');
+      const receipt = `
+📧 Чек от Силовик
+===========================
+От: silovik23.103@mail.ru
+Кому: ${client.email}
+Дата: ${now}
+===========================
+Покупатель: ${client.firstName} ${client.lastName}
+Телефон: ${client.phone}
+Адрес: ${client.city}, ${client.address}, ${client.zip}
+===========================
+Товары:
+${cart.map(item => `• ${item.name} — ${item.price} ₽`).join('\n')}
+===========================
+Итого: ${total} ₽
+Статус: ОПЛАЧЕНО ✅
+===========================
+Спасибо за покупку в Силовик!
+      `.trim();
+
+      console.log("✉️ Симуляция отправки email:");
+      console.log("Отправитель:", "silovik23.103@mail.ru");
+      console.log("Получатель:", client.email);
+      console.log("Тело письма:\n", receipt);
+    }
+
+    // === ОБРАБОТКА ФОРМЫ ===
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (!validateForm()) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ошибка в данных',
+          text: 'Проверьте правильность заполнения полей',
+          customClass: { popup: 'shadow-2xl rounded-xl' }
+        });
+        return;
+      }
+
+      const client = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        zip: document.getElementById('zip').value.trim(),
+        address: document.getElementById('address').value.trim()
+      };
+
+      const cart = JSON.parse(localStorage.getItem('cartForCheckout')) || [];
+      const total = document.getElementById('orderTotal').textContent.replace(' ₽', '');
+
+      simulateEmailReceipt(client, cart, total);
+
+      const order = {
+        id: 'ORD-' + Date.now().toString().slice(-6),
+        date: new Date().toISOString(),
+        client,
+        items: cart,
+        total: parseInt(total),
+        status: 'paid'
+      };
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      orders.push(order);
+      localStorage.setItem('orders', JSON.stringify(orders));
+      localStorage.removeItem('cartForCheckout');
+      localStorage.setItem('cart', '[]');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Заказ успешно оформлен!',
+        html: `
+          <div class="text-center space-y-2">
+            <p>Чек отправлен от <strong>silovik23.103@mail.ru</strong></p>
+            <p>на email: <strong>${client.email}</strong></p>
+            <p class="text-sm text-gray-400">Заказ: <strong>${order.id}</strong></p>
+          </div>
+        `,
+        confirmButtonText: 'На главную',
+        customClass: {
+          popup: 'shadow-2xl rounded-xl',
+          title: 'text-yellow-500'
+        },
+        iconColor: '#f59e0b'
+      }).then(() => {
+        window.location.href = 'index.html';
+      });
+    });
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    loadCart();
+    document.querySelector('[data-method="card"]').click();
+
+    setTimeout(() => {
+      document.getElementById('submitBtn').classList.add('active');
+    }, 300);
+  </script>
+</body>
+</html>
+
+
+<script>
+    localStorage.setItem('isLoggedIn', 'true');
+</script>
+</body>
+</html>                    

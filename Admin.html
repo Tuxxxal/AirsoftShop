@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Админ-панель: Страйкбольное снаряжение</title>
+<title>Админ-панель: Силовик</title>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -13,28 +13,157 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
 <style>
-body { background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: #fff; }
-.sidebar a { display:block; padding:12px 16px; border-radius:8px; margin-bottom:6px; transition:0.3s; }
-.sidebar a:hover { background: rgba(255,215,0,0.2); color: #ffd700; }
-.table-wrapper { overflow-x:auto; }
-.fade-in { opacity:0; transform:translateY(20px); transition:0.5s ease-out; }
-.fade-in.show { opacity:1; transform:translateY(0); }
+body { 
+  background-color: #0f172a; /* bg-slate-900 */
+  color: #fff; 
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.sidebar a { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  padding: 14px 16px; 
+  border-radius: 12px; 
+  margin-bottom: 8px; 
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+.sidebar a:hover { 
+  background: rgba(245, 158, 11, 0.15); 
+  color: #f59e0b; 
+  transform: translateX(4px);
+}
+.sidebar a.active {
+  background: rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+  border-left: 3px solid #f59e0b;
+}
+.table-wrapper { 
+  overflow-x: auto; 
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+.fade-in { 
+  opacity: 0; 
+  transform: translateY(20px); 
+  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.fade-in.show { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.action-btn.edit {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+.action-btn.edit:hover {
+  background: rgba(59, 130, 246, 0.25);
+}
+.action-btn.delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+.action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+.modal-content {
+  background: #1e293b; /* bg-slate-800 */
+  border-radius: 16px;
+  width: 95%;
+  max-width: 520px;
+  padding: 28px;
+  border: 1px solid #334155; /* slate-700 */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
 </style>
 </head>
-<body>
+<body class="min-h-screen">
 
 <!-- Top Navbar -->
-<nav class="bg-black bg-opacity-80 shadow p-4 flex justify-between items-center fixed w-full z-20">
-  <div class="text-xl font-bold text-yellow-500">Airsoft Shop | Admin</div>
-  <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg" onclick="logout()">Выйти</button>
+<nav class="bg-black/90 backdrop-blur border-b border-yellow-500/30 shadow-md shadow-black/40 fixed top-0 left-0 w-full z-50">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <div class="flex items-center space-x-3">
+      <div class="h-10 w-10 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center shadow-lg shadow-yellow-500/40">
+        <span class="font-bold text-black text-xl">S</span>
+      </div>
+      <span class="self-center text-2xl font-extrabold text-yellow-500 tracking-wide">Силовик | Админка</span>
+    </div>
+    <button class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-5 py-2.5 rounded-lg font-medium shadow-lg shadow-red-500/20 transition-all duration-300 flex items-center gap-2" onclick="logout()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+      Выйти
+    </button>
+  </div>
 </nav>
 
-<div class="flex pt-16 min-h-screen">
+<div class="flex pt-20 min-h-screen">
 
   <!-- Sidebar -->
-  <aside class="w-64 sidebar p-6 bg-gray-900/80 backdrop-blur-md">
-    <a href="#" onclick="showSection('products')">📦 Товары</a>
-    <a href="#" onclick="showSection('users')">👥 Пользователи</a>
+  <aside class="w-64 sidebar p-6 bg-slate-800/80 backdrop-blur-lg border-r border-slate-700">
+    <div class="space-y-2">
+      <a href="#" onclick="showSection('products')" class="active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        Товары
+      </a>
+      <a href="#" onclick="showSection('users')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Пользователи
+      </a>
+      <a href="#" onclick="showSection('analytics')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Аналитика
+      </a>
+      <a href="#" onclick="showSection('settings')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Настройки
+      </a>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-slate-700">
+      <div class="text-xs text-slate-400 uppercase tracking-wider mb-3">Статистика</div>
+      <div class="space-y-3">
+        <div class="flex justify-between">
+          <span>Товаров:</span>
+          <span class="font-bold text-yellow-400" id="totalProducts">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Пользователей:</span>
+          <span class="font-bold text-yellow-400" id="totalUsers">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Заказов:</span>
+          <span class="font-bold text-yellow-400">24</span>
+        </div>
+      </div>
+    </div>
   </aside>
 
   <!-- Content -->
@@ -42,42 +171,141 @@ body { background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: 
 
     <!-- Секция Товары -->
     <section id="productsSection" class="fade-in">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold text-yellow-400">Список товаров</h2>
-        <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">+ Добавить товар</button>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-yellow-400">Управление товарами</h2>
+          <p class="text-slate-400 mt-1">Добавляйте, редактируйте и удаляйте товары</p>
+        </div>
+        <button onclick="openModal()" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black px-5 py-2.5 rounded-lg font-medium shadow-lg shadow-yellow-500/30 transition-all duration-300 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Добавить товар
+        </button>
       </div>
-      <div class="table-wrapper bg-gray-800 rounded-lg shadow">
-        <table class="min-w-full text-left text-white">
-          <thead class="bg-gray-700">
+      <div class="table-wrapper bg-slate-800">
+        <table class="min-w-full text-left text-slate-200">
+          <thead class="bg-slate-700/50">
             <tr>
-              <th class="px-4 py-2">#</th>
-              <th class="px-4 py-2">Название</th>
-              <th class="px-4 py-2">Описание</th>
-              <th class="px-4 py-2">Цена</th>
-              <th class="px-4 py-2">Действия</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Название</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Описание</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Цена</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider text-center">Действия</th>
             </tr>
           </thead>
-          <tbody id="productsTable"></tbody>
+          <tbody id="productsTable" class="divide-y divide-slate-700/30"></tbody>
         </table>
       </div>
     </section>
 
     <!-- Секция Пользователи -->
     <section id="usersSection" class="fade-in hidden">
-      <h2 class="text-2xl font-bold text-yellow-400 mb-4">Список пользователей</h2>
-      <div class="table-wrapper bg-gray-800 rounded-lg shadow">
-        <table class="min-w-full text-left text-white">
-          <thead class="bg-gray-700">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-yellow-400">Управление пользователями</h2>
+          <p class="text-slate-400 mt-1">Просмотр и управление учетными записями</p>
+        </div>
+        <button class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-lg shadow-blue-500/30 transition-all duration-300 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Добавить пользователя
+        </button>
+      </div>
+      <div class="table-wrapper bg-slate-800">
+        <table class="min-w-full text-left text-slate-200">
+          <thead class="bg-slate-700/50">
             <tr>
-              <th class="px-4 py-2">#</th>
-              <th class="px-4 py-2">Имя</th>
-              <th class="px-4 py-2">Email</th>
-              <th class="px-4 py-2">Роль</th>
-              <th class="px-4 py-2">Действия</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Имя</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider">Роль</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider text-center">Статус</th>
+              <th class="px-6 py-3 text-xs font-bold uppercase tracking-wider text-center">Действия</th>
             </tr>
           </thead>
-          <tbody id="usersTable"></tbody>
+          <tbody id="usersTable" class="divide-y divide-slate-700/30"></tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- Секция Аналитика -->
+    <section id="analyticsSection" class="fade-in hidden">
+      <h2 class="text-2xl font-bold text-yellow-400 mb-6">Аналитика магазина</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+          <div class="text-3xl font-bold text-yellow-400 mb-2">124</div>
+          <div class="text-slate-400">Всего товаров</div>
+        </div>
+        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+          <div class="text-3xl font-bold text-blue-400 mb-2">2,841</div>
+          <div class="text-slate-400">Посетителей</div>
+        </div>
+        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+          <div class="text-3xl font-bold text-green-400 mb-2">84</div>
+          <div class="text-slate-400">Заказов</div>
+        </div>
+        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+          <div class="text-3xl font-bold text-orange-400 mb-2">1.24M ₽</div>
+          <div class="text-slate-400">Выручка</div>
+        </div>
+      </div>
+      
+      <div class="mt-8 bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+        <h3 class="text-xl font-bold text-yellow-400 mb-4">Последние заказы</h3>
+        <div class="space-y-4">
+          <div class="flex justify-between items-center pb-3 border-b border-slate-700/30">
+            <div>
+              <div class="font-medium">Заказ #1042</div>
+              <div class="text-sm text-slate-400">Иван Иванов</div>
+            </div>
+            <div class="text-right">
+              <div class="font-bold text-green-400">12,500 ₽</div>
+              <div class="text-sm text-slate-400">Сегодня, 14:30</div>
+            </div>
+          </div>
+          <div class="flex justify-between items-center pb-3 border-b border-slate-700/30">
+            <div>
+              <div class="font-medium">Заказ #1041</div>
+              <div class="text-sm text-slate-400">Петр Петров</div>
+            </div>
+            <div class="text-right">
+              <div class="font-bold text-green-400">8,200 ₽</div>
+              <div class="text-sm text-slate-400">Вчера, 18:15</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция Настройки -->
+    <section id="settingsSection" class="fade-in hidden">
+      <h2 class="text-2xl font-bold text-yellow-400 mb-6">Настройки магазина</h2>
+      <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/30">
+        <div class="space-y-6">
+          <div>
+            <label class="block text-slate-300 font-medium mb-2">Название магазина</label>
+            <input type="text" value="Силовик - Страйкбольный магазин" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-2">Контактный email</label>
+            <input type="email" value="info@silovik.ru" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-2">Телефон поддержки</label>
+            <input type="tel" value="+7 (495) 123-45-67" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+          </div>
+          <div class="pt-4">
+            <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium shadow-lg shadow-green-500/30 transition-all duration-300">
+              Сохранить настройки
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -85,18 +313,44 @@ body { background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: 
 </div>
 
 <!-- Универсальная модалка для добавления/редактирования товара -->
-<div id="productModal" tabindex="-1" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-  <div class="bg-gray-900 p-6 rounded-xl w-full max-w-md">
-    <h3 id="modalTitle" class="text-xl font-bold text-yellow-400 mb-4">Добавить товар</h3>
-    <form id="productForm" class="space-y-4">
+<div id="productModal" tabindex="-1" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+  <div class="modal-content">
+    <div class="flex justify-between items-center mb-6">
+      <h3 id="modalTitle" class="text-2xl font-bold text-yellow-400">Добавить товар</h3>
+      <button onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+    </div>
+    <form id="productForm" class="space-y-5">
       <input type="hidden" id="productId">
-      <input type="text" id="productName" placeholder="Название" class="w-full p-2 rounded bg-gray-800" required>
-      <textarea id="productDesc" placeholder="Описание" class="w-full p-2 rounded bg-gray-800" required></textarea>
-      <input type="number" id="productPrice" placeholder="Цена" class="w-full p-2 rounded bg-gray-800" required>
-      <input type="url" id="productImg" placeholder="Ссылка на изображение" class="w-full p-2 rounded bg-gray-800" required>
-      <div class="flex justify-between space-x-2">
-        <button type="button" onclick="closeModal()" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white py-2 rounded">Отмена</button>
-        <button type="submit" class="w-1/2 bg-yellow-500 hover:bg-yellow-600 text-black py-2 rounded font-bold">Сохранить</button>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">Название товара</label>
+        <input type="text" id="productName" placeholder="Введите название товара" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none" required>
+      </div>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">Описание</label>
+        <textarea id="productDesc" placeholder="Введите описание товара" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none" rows="3" required></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-slate-300 font-medium mb-2">Цена (₽)</label>
+          <input type="number" id="productPrice" placeholder="Цена" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none" required>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-2">Категория</label>
+          <select id="productCategory" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+            <option>Оружие</option>
+            <option>Экипировка</option>
+            <option>Аксессуары</option>
+            <option>Амуниция</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">Ссылка на изображение</label>
+        <input type="url" id="productImg" placeholder="https://example.com/image.jpg" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white focus:ring-2 focus:ring-yellow-500 focus:outline-none" required>
+      </div>
+      <div class="flex justify-end space-x-3 pt-2">
+        <button type="button" onclick="closeModal()" class="px-5 py-2.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-medium transition">Отмена</button>
+        <button type="submit" class="px-5 py-2.5 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black rounded-lg font-medium shadow-lg shadow-yellow-500/30 transition">Сохранить</button>
       </div>
     </form>
   </div>
@@ -104,30 +358,64 @@ body { background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: 
 
 <script>
 // Анимация появления
-document.querySelectorAll('.fade-in').forEach(el=>{
-  setTimeout(()=>el.classList.add('show'),100);
+document.querySelectorAll('.fade-in').forEach((el, index) => {
+  setTimeout(() => el.classList.add('show'), 100 + index * 50);
 });
 
 // Переключение секций
-function showSection(section){
+function showSection(section) {
+  // Скрыть все секции
   document.getElementById('productsSection').classList.add('hidden');
   document.getElementById('usersSection').classList.add('hidden');
-  if(section==='products') document.getElementById('productsSection').classList.remove('hidden');
-  if(section==='users') document.getElementById('usersSection').classList.remove('hidden');
+  document.getElementById('analyticsSection').classList.add('hidden');
+  document.getElementById('settingsSection').classList.add('hidden');
+  
+  // Убрать активный класс у всех ссылок
+  document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+  
+  // Показать нужную секцию и добавить активный класс
+  if(section === 'products') {
+    document.getElementById('productsSection').classList.remove('hidden');
+    document.querySelector('.sidebar a:nth-child(1)').classList.add('active');
+  }
+  if(section === 'users') {
+    document.getElementById('usersSection').classList.remove('hidden');
+    document.querySelector('.sidebar a:nth-child(2)').classList.add('active');
+  }
+  if(section === 'analytics') {
+    document.getElementById('analyticsSection').classList.remove('hidden');
+    document.querySelector('.sidebar a:nth-child(3)').classList.add('active');
+  }
+  if(section === 'settings') {
+    document.getElementById('settingsSection').classList.remove('hidden');
+    document.querySelector('.sidebar a:nth-child(4)').classList.add('active');
+  }
 }
 
 // Выход
-function logout(){ window.location.href = 'Authorization.html'; }
+function logout() {
+  if(confirm('Вы действительно хотите выйти из админ-панели?')) {
+    window.location.href = 'Authorization.html';
+  }
+}
 
 // Данные
 let productsData = [
-  {id:1,name:'Glock 19',desc:'Газовый пистолет',price:7000,img:""},
-  {id:2,name:'AK74M',desc:'Электропневматическая винтовка',price:18900,img:""}
+  {id:1, name:'Пистолет GLOCK 19', desc:'Газовый привод, металлический затвор', price:7000, img:""},
+  {id:2, name:'Автомат АК74M', desc:'Электропневматический, полимерный корпус', price:18900, img:""}
 ];
 const usersData = [
-  {id:1,name:'Иван Иванов',email:'ivan@mail.ru',role:'Admin'},
-  {id:2,name:'Петр Петров',email:'petr@mail.ru',role:'User'}
+  {id:1, name:'Иван Иванов', email:'ivan@mail.ru', role:'Admin', status: 'active'},
+  {id:2, name:'Петр Петров', email:'petr@mail.ru', role:'User', status: 'active'},
+  {id:3, name:'Алексей Смирнов', email:'alexey@mail.ru', role:'User', status: 'banned'}
 ];
+
+// Обновление статистики
+function updateStats() {
+  document.getElementById('totalProducts').textContent = productsData.length;
+  document.getElementById('totalUsers').textContent = usersData.length;
+}
+updateStats();
 
 // Таблица товаров
 const productsTable = document.getElementById('productsTable');
@@ -158,7 +446,7 @@ function closeModal() {
 }
 
 // Сохранение товара
-productForm.addEventListener("submit", (e)=>{
+productForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const id = document.getElementById("productId").value;
   const newProduct = {
@@ -166,59 +454,96 @@ productForm.addEventListener("submit", (e)=>{
     name: document.getElementById("productName").value,
     desc: document.getElementById("productDesc").value,
     price: document.getElementById("productPrice").value,
-    img: document.getElementById("productImg").value
+    img: document.getElementById("productImg").value,
+    category: document.getElementById("productCategory").value
   };
   
-  if(id){ 
-    const index = productsData.findIndex(p=>p.id==id);
+  if(id) { 
+    const index = productsData.findIndex(p => p.id == id);
     productsData[index] = newProduct;
   } else {
     productsData.push(newProduct);
   }
   
   renderProducts();
+  updateStats();
   closeModal();
 });
 
 // Рендер товаров
-function renderProducts(){
-  productsTable.innerHTML="";
-  productsData.forEach((p,i)=>{
+function renderProducts() {
+  productsTable.innerHTML = "";
+  productsData.forEach((p, i) => {
     const row = document.createElement('tr');
-    row.className='border-b border-gray-700';
+    row.className = 'hover:bg-slate-700/30 transition';
     row.innerHTML = `
-      <td class="px-4 py-2">${i+1}</td>
-      <td class="px-4 py-2">${p.name}</td>
-      <td class="px-4 py-2">${p.desc}</td>
-      <td class="px-4 py-2">${p.price} ₽</td>
-      <td class="px-4 py-2 space-x-2">
-        <button class="text-blue-400 hover:underline" onclick='openModal(true, ${JSON.stringify(p)})'>Редактировать</button>
-        <button class="text-red-500 hover:underline" onclick='deleteProduct(${p.id})'>Удалить</button>
+      <td class="px-6 py-4 font-mono">${p.id}</td>
+      <td class="px-6 py-4 font-medium">${p.name}</td>
+      <td class="px-6 py-4 text-slate-400">${p.desc}</td>
+      <td class="px-6 py-4 font-bold text-orange-400">${p.price.toLocaleString()} ₽</td>
+      <td class="px-6 py-4 text-center">
+        <div class="flex justify-center gap-2">
+          <button class="action-btn edit" onclick='openModal(true, ${JSON.stringify(p)})'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
+            </svg>
+            Редактировать
+          </button>
+          <button class="action-btn delete" onclick='deleteProduct(${p.id})'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Удалить
+          </button>
+        </div>
       </td>`;
     productsTable.appendChild(row);
   });
 }
 
-function deleteProduct(id){
-  if(confirm("Удалить товар?")){
-    const index = productsData.findIndex(p=>p.id==id);
-    if(index>-1) productsData.splice(index,1);
+function deleteProduct(id) {
+  if(confirm("Вы уверены, что хотите удалить этот товар?")) {
+    const index = productsData.findIndex(p => p.id == id);
+    if(index > -1) productsData.splice(index, 1);
     renderProducts();
+    updateStats();
   }
 }
 
 // Рендер пользователей
 const usersTable = document.getElementById('usersTable');
-usersData.forEach((u,i)=>{
+usersData.forEach((u, i) => {
+  const statusBadge = u.status === 'active' 
+    ? '<span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Активен</span>'
+    : '<span class="px-2 py-1 bg-red-500/20 text-red-400 rounded-full text-xs">Заблокирован</span>';
+    
   const row = document.createElement('tr');
-  row.className='border-b border-gray-700';
-  row.innerHTML = `<td class="px-4 py-2">${i+1}</td>
-    <td class="px-4 py-2">${u.name}</td>
-    <td class="px-4 py-2">${u.email}</td>
-    <td class="px-4 py-2">${u.role}</td>
-    <td class="px-4 py-2 space-x-2">
-      <button class="text-blue-400 hover:underline">Редактировать</button>
-      <button class="text-red-500 hover:underline">Удалить</button>
+  row.className = 'hover:bg-slate-700/30 transition';
+  row.innerHTML = `
+    <td class="px-6 py-4 font-mono">${u.id}</td>
+    <td class="px-6 py-4 font-medium">${u.name}</td>
+    <td class="px-6 py-4 text-slate-400">${u.email}</td>
+    <td class="px-6 py-4">
+      <span class="px-2 py-1 ${u.role === 'Admin' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-blue-500/20 text-blue-400'} rounded-full text-xs">
+        ${u.role}
+      </span>
+    </td>
+    <td class="px-6 py-4 text-center">${statusBadge}</td>
+    <td class="px-6 py-4 text-center">
+      <div class="flex justify-center gap-2">
+        <button class="action-btn edit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
+          </svg>
+        </button>
+        <button class="action-btn delete">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+      </div>
     </td>`;
   usersTable.appendChild(row);
 });
@@ -229,3 +554,4 @@ renderProducts();
 
 </body>
 </html>
+
